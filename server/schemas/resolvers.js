@@ -18,24 +18,24 @@ const resolvers = {
     users: async () => {
       return User.find()
         .select('-__v -password')
-        .populate('reviews')
+        .populate({ path: 'reviews', options: { sort: { createdAt: -1 } } })
         .populate('friends');
     },
     user: async (parent, { username }) => {
       return User.findOne({ username })
         .select('-__v -password')
-        .populate('friends')
-        .populate('reviews');
+        .populate({ path: 'reviews', options: { sort: { createdAt: -1 } } })
+        .populate('friends');
     },
     maids: async () => {
       return Maid.find()
-        .populate('reviews')
+        .populate({ path: 'reviews', options: { sort: { createdAt: -1 } } })
         .populate('friends');
     },
     maid: async (parent, { maid_username }) => {
       return Maid.findOne({ maid_username })
         .populate('friends')
-        .populate('reviews');
+        .populate({ path: 'reviews', options: { sort: { createdAt: -1 } } })
     },
     reviews: async (parent, { username }) => {
       const params = username ? { username } : {};
